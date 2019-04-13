@@ -4,9 +4,10 @@
 [Here][emacs-init-file] you can find where to put the file
 
 # Using this file
-You can link your emacs config file by making a symbolic link to current file. Replace *<repos-dir>* by your own dir
+You can link your emacs config file by making a symbolic link to current file
+
 ```sh
-ln -s ~/<repos-dir>/github.com/pouyanh/dotfiles/emacs/init.el ~/.emacs.d/init.el
+ln -s ~/path/to/repo/dotfiles/emacs/init.el ~/.emacs.d/init.el
 ```
 
 [emacs]: https://www.gnu.org/software/emacs/
