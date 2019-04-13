@@ -70,6 +70,11 @@ There are two things you can do about this warning:
  ;; If there is more than one, they won't work right.
  )
 
+;; History
+
+(savehist-mode 1)
+(desktop-save-mode 1)
+
 ;; Company
 
 (add-hook 'after-init-hook 'global-company-mode)
