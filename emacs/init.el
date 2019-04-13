@@ -70,6 +70,10 @@ There are two things you can do about this warning:
  ;; If there is more than one, they won't work right.
  )
 
+;; Dired
+
+(add-hook 'dired-mode-hook 'auto-revert-mode)
+
 ;; History
 
 (savehist-mode 1)
