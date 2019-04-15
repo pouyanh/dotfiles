@@ -1,4 +1,3 @@
-(setq package-list '(editorconfig company-shell company-c-headers company-erlang company-lua company-php company-go company flycheck cuda-mode go-mode yaml-mode php-mode markdown-mode dockerfile-mode docker-compose-mode golint flymake-go go-eldoc darcula-theme))
 
 (require 'package)
 (let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
@@ -32,15 +31,6 @@ There are two things you can do about this warning:
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
 (package-initialize)
-
-;; Fetch the list of packages available
-(unless package-archive-contents
-  (package-refresh-contents))
-
-;; Install the missing packages
-(dolist (package package-list)
-  (unless (package-installed-p package)
-    (package-install package)))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -83,6 +73,15 @@ There are two things you can do about this warning:
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+;; Fetch the list of packages available
+(unless package-archive-contents
+  (package-refresh-contents))
+
+;; Install the missing packages
+(dolist (package package-selected-packages)
+  (unless (package-installed-p package)
+    (package-install package)))
 
 ;; Dired
 
