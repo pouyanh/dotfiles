@@ -104,28 +104,19 @@ There are two things you can do about this warning:
 (setq company-idle-delay 0)
 (setq company-minimum-prefix-length 1)
 
-(add-hook 'go-mode-hook
-      (lambda ()
-        (set (make-local-variable 'company-backends) '(company-go))
-        (company-mode)))
-
-;; Flymake
-
-(eval-after-load "go-mode"
-  '(require 'flymake-go))
-
-;; gofmt
-
-(add-hook 'go-mode-hook
-	  (lambda ()
-	    (add-hook 'before-save-hook 'gofmt-before-save)))
-
-;; golint
+;; Golang Specific Configs
 
 (add-to-list 'load-path (concat (getenv "GOPATH")  "/src/github.com/golang/lint/misc/emacs"))
 (require 'golint)
 
-;; go-eldoc
+(add-hook 'go-mode-hook
+	  (lambda ()
+	    (go-eldoc-setup)
+	    (add-hook 'before-save-hook 'gofmt-before-save)
+	    (set (make-local-variable 'company-backends) '(company-go))
+	    (company-mode)))
 
-(add-hook 'go-mode-hook 'go-eldoc-setup)
+(eval-after-load "go-mode"
+  '(require 'flymake-go))
+
 
