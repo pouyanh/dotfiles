@@ -114,6 +114,12 @@ There are two things you can do about this warning:
 (eval-after-load "go-mode"
   '(require 'flymake-go))
 
+;; gofmt
+
+(add-hook 'go-mode-hook
+	  (lambda ()
+	    (add-hook 'before-save-hook 'gofmt-before-save)))
+
 ;; golint
 
 (add-to-list 'load-path (concat (getenv "GOPATH")  "/src/github.com/golang/lint/misc/emacs"))
