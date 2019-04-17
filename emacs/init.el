@@ -66,7 +66,7 @@ There are two things you can do about this warning:
      (deprecated :strike-through "#a9b7c6"))))
  '(package-selected-packages
    (quote
-    (editorconfig company-shell company-c-headers company-erlang company-lua company-php company-go company flycheck cuda-mode go-mode yaml-mode php-mode markdown-mode dockerfile-mode docker-compose-mode golint flymake-go go-eldoc darcula-theme))))
+    (go-rename editorconfig company-shell company-c-headers company-erlang company-lua company-php company-go company flycheck cuda-mode go-mode yaml-mode php-mode markdown-mode dockerfile-mode docker-compose-mode golint flymake-go go-eldoc darcula-theme))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -118,5 +118,4 @@ There are two things you can do about this warning:
 
 (eval-after-load "go-mode"
   '(require 'flymake-go))
-
 
