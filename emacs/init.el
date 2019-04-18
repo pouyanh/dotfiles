@@ -83,6 +83,11 @@ There are two things you can do about this warning:
   (unless (package-installed-p package)
     (package-install package)))
 
+;; Line Numbers
+
+(when (version<= "26.0.50" emacs-version )
+  (global-display-line-numbers-mode))
+
 ;; Dired
 
 (add-hook 'dired-mode-hook 'auto-revert-mode)
