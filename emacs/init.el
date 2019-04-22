@@ -102,13 +102,12 @@ There are two things you can do about this warning:
 
 ;; Company
 
-(eval-after-load 'company-mode
-  (lambda ()
-    ;(setq company-dabbrev-code-modes t)
-    (setq company-dabbrev-downcase 0)
-    (setq company-idle-delay 0)
-    (setq company-minimum-prefix-length 1)
-    (add-hook 'after-init-hook 'global-company-mode)))
+(add-hook 'after-init-hook 'global-company-mode)
+
+;(setq company-dabbrev-code-modes t)
+(setq company-dabbrev-downcase 0)
+(setq company-idle-delay 0)
+(setq company-minimum-prefix-length 1)
 
 ;; Golang Specific Configs
 
@@ -128,7 +127,7 @@ There are two things you can do about this warning:
 
 (defun pouyan-c-mode ()
   (set (make-local-variable 'clang-format-style-option) "llvm")
-  (add-to-list (make-local-variable 'company-backends) '(company-irony-c-headers company-irony company-c-headers))
+  (add-to-list (make-local-variable 'company-backends) '(company-irony-c-headers company-irony company-c-headers company-clang))
   (add-hook (make-local-variable 'before-save-hook) 'clang-format-buffer)
   (irony-mode))
 
