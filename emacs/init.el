@@ -1,4 +1,3 @@
-
 (require 'package)
 (let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
                     (not (gnutls-available-p))))
@@ -66,7 +65,7 @@ There are two things you can do about this warning:
      (deprecated :strike-through "#a9b7c6"))))
  '(package-selected-packages
    (quote
-    (company-irony-c-headers company-irony irony go-rename editorconfig company-shell company-c-headers company-erlang company-lua company-php company-go company flycheck cuda-mode go-mode yaml-mode php-mode markdown-mode dockerfile-mode docker-compose-mode golint flymake-go go-eldoc darcula-theme))))
+    (cmake-project cmake-mode clang-format irony-eldoc flycheck-irony company-irony-c-headers company-irony irony go-rename editorconfig company-shell company-c-headers company-erlang company-lua company-php company-go company flycheck cuda-mode go-mode yaml-mode php-mode markdown-mode dockerfile-mode docker-compose-mode golint flymake-go go-eldoc darcula-theme))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -103,35 +102,51 @@ There are two things you can do about this warning:
 
 ;; Company
 
-(add-hook 'after-init-hook 'global-company-mode)
-
-(setq company-dabbrev-downcase 0)
-(setq company-idle-delay 0)
-(setq company-minimum-prefix-length 1)
+(eval-after-load 'company-mode
+  (lambda ()
+    ;(setq company-dabbrev-code-modes t)
+    (setq company-dabbrev-downcase 0)
+    (setq company-idle-delay 0)
+    (setq company-minimum-prefix-length 1)
+    (add-hook 'after-init-hook 'global-company-mode)))
 
 ;; Golang Specific Configs
 
-(add-to-list 'load-path (concat (getenv "GOPATH")  "/src/github.com/golang/lint/misc/emacs"))
-(require 'golint)
+(eval-after-load 'go-mode
+  (lambda ()
+    (add-to-list 'load-path (concat (getenv "GOPATH")  "/src/github.com/golang/lint/misc/emacs"))
+    (require 'golint)
+    (require 'flymake-go)
+    (add-hook 'go-mode-hook
+	      (lambda ()
+		(go-eldoc-setup)
+		(add-hook (make-local-variable 'before-save-hook) 'gofmt-before-save)
+		(add-to-list (make-local-variable 'company-backends) '(company-go))
+		(company-mode)))))
 
-(add-hook 'go-mode-hook
+;; C Specific Configs
+
+(defun pouyan-c-mode ()
+  (set (make-local-variable 'clang-format-style-option) "llvm")
+  (add-to-list (make-local-variable 'company-backends) '(company-irony-c-headers company-irony company-c-headers))
+  (add-hook (make-local-variable 'before-save-hook) 'clang-format-buffer)
+  (irony-mode))
+
+(add-hook 'c-mode-hook 'pouyan-c-mode)
+(add-hook 'c++-mode-hook 'pouyan-c-mode)
+(add-hook 'objc-mode-hook 'pouyan-c-mode)
+
+(add-hook 'irony-mode-hook
 	  (lambda ()
-	    (go-eldoc-setup)
-	    (add-hook 'before-save-hook 'gofmt-before-save)
-	    (set (make-local-variable 'company-backends) '(company-go))
-	    (company-mode)))
+	    (irony-eldoc)
+	    (company-irony-setup-begin-commands)
+	    (irony-cdb-autosetup-compile-options)))
 
-(eval-after-load "go-mode"
-  '(require 'flymake-go))
+(eval-after-load 'flycheck
+  '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
 
-;; Irony
+;; CMake
 
-(add-hook 'c++-mode-hook 'irony-mode)
-(add-hook 'c-mode-hook 'irony-mode)
-(add-hook 'objc-mode-hook 'irony-mode)
-
-(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
-
-(eval-after-load 'company
-  '(add-to-list
-    'company-backends '(company-irony-c-headers company-irony)))
+(add-hook 'cmake-mode-hook
+	  (lambda ()
+	    (set (make-local-variable 'company-backends) '(company-cmake))))
