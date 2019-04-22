@@ -82,10 +82,19 @@ There are two things you can do about this warning:
   (unless (package-installed-p package)
     (package-install package)))
 
-;; Line Numbers
+;; Display
 
 (when (version<= "26.0.50" emacs-version )
   (global-display-line-numbers-mode))
+
+(line-number-mode 1)   ; have line numbers and
+(column-number-mode 1) ; column numbers in the mode line
+
+(global-hl-line-mode) ; highlight current line
+(global-linum-mode 1) ; add line numbers to the left
+
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
 
 ;; Dired
 
