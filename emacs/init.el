@@ -65,7 +65,7 @@ There are two things you can do about this warning:
      (deprecated :strike-through "#a9b7c6"))))
  '(package-selected-packages
    (quote
-    (cmake-project cmake-mode clang-format irony-eldoc flycheck-irony company-irony-c-headers company-irony irony go-rename editorconfig company-shell company-c-headers company-erlang company-lua company-php company-go company flycheck cuda-mode go-mode yaml-mode php-mode markdown-mode dockerfile-mode docker-compose-mode golint flymake-go go-eldoc darcula-theme))))
+    (helm tss tide typescript-mode js2-mode web-mode company-cmake dumb-jump cmake-project cmake-mode clang-format irony-eldoc flycheck-irony company-irony-c-headers company-irony irony go-rename editorconfig company-shell company-c-headers company-erlang company-lua company-php company-go company flycheck cuda-mode go-mode yaml-mode php-mode markdown-mode dockerfile-mode docker-compose-mode golint flymake-go go-eldoc darcula-theme))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -90,7 +90,7 @@ There are two things you can do about this warning:
 (line-number-mode 1)   ; have line numbers and
 (column-number-mode 1) ; column numbers in the mode line
 
-(global-hl-line-mode) ; highlight current line
+;; (global-hl-line-mode) ; highlight current line
 (global-linum-mode 1) ; add line numbers to the left
 
 (tool-bar-mode -1)
@@ -108,6 +108,9 @@ There are two things you can do about this warning:
 ;; Editorconfig
 
 (editorconfig-mode 1)
+
+;; Jump to definition
+(dumb-jump-mode)
 
 ;; Company
 
@@ -140,9 +143,9 @@ There are two things you can do about this warning:
   (add-hook (make-local-variable 'before-save-hook) 'clang-format-buffer)
   (irony-mode))
 
-(add-hook 'c-mode-hook 'pouyan-c-mode)
-(add-hook 'c++-mode-hook 'pouyan-c-mode)
-(add-hook 'objc-mode-hook 'pouyan-c-mode)
+(add-hook 'c-mode-hook #'pouyan-c-mode)
+(add-hook 'c++-mode-hook #'pouyan-c-mode)
+(add-hook 'objc-mode-hook #'pouyan-c-mode)
 
 (add-hook 'irony-mode-hook
 	  (lambda ()
@@ -158,3 +161,24 @@ There are two things you can do about this warning:
 (add-hook 'cmake-mode-hook
 	  (lambda ()
 	    (set (make-local-variable 'company-backends) '(company-cmake))))
+
+;; Typescript
+
+(defun pouyan-ts-mode ()
+  (interactive)
+  (tide-setup)
+  (flycheck-mode +1)
+  (set (make-local-variable flycheck-check-syntax-automatically) '(save mode-enabled))
+  (eldoc-mode +1)
+  (tide-hl-identifier-mode +1)
+  ;; company is an optional dependency. You have to
+  ;; install it separately via package-install
+  ;; `M-x package-install [ret] company`
+  (company-mode +1)
+  (add-hook (make-local-variable 'before-save-hook) 'tide-format-before-save))
+
+(add-hook 'typescript-mode-hook #'pouyan-ts-mode)
+
+(add-to-list 'auto-mode-alist '("\\.tsx?\\'" . typescript-mode))
+
+(add-to-list 'auto-mode-alist '("\\.tsx?\\'" . web-mode))
