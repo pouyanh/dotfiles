@@ -46,7 +46,7 @@ DISABLE_AUTO_UPDATE="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(ssh-agent gpg-agent git git-extras git_remote_branch git-flow github go terminitor autojump docker history-substring-search docker-compose tmux kubectl npm bower)
+plugins=(ssh-agent gpg-agent command-not-found git git-extras git_remote_branch git-flow github go terminitor autojump docker history-substring-search docker-compose tmux kubectl npm bower)
 
 # zstyle :omz:plugins:ssh-agent lifetime 1h
 
