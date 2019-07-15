@@ -21,7 +21,7 @@ Plugin 'VundleVim/Vundle.vim'
 
 " Programming
 Plugin 'editorconfig/editorconfig-vim'
-Plugin 'vim-syntastic/syntastic'
+" Plugin 'vim-syntastic/syntastic'
 " Plugin 'janko-m/vim-test'
 
 " Autocomplete
@@ -29,6 +29,7 @@ Plugin 'vim-syntastic/syntastic'
 " Plugin 'roxma/nvim-yarp'
 " Plugin 'roxma/vim-hug-neovim-rpc'
 Plugin 'Valloric/YouCompleteMe'
+Plugin 'rip-rip/clang_complete'
 
 " Git
 Plugin 'airblade/vim-gitgutter'
@@ -36,7 +37,7 @@ Plugin 'airblade/vim-gitgutter'
 " Go
 Plugin 'fatih/vim-go'
 " Plugin 'nsf/gocode', {'rtp': 'vim/'}
-" Plugin 'mdempsky/gocode', {'rtp': 'vim/'}
+Plugin 'mdempsky/gocode', {'rtp': 'vim/'}
 " Plugin 'stamblerre/gocode', {'rtp': 'vim/'}
 
 " Erlang Support
@@ -183,6 +184,9 @@ augroup pencil
   autocmd FileType markdown,mkd call pencil#init()
   autocmd FileType text         call pencil#init()
 augroup END
+
+" clang_complete
+let g:clang_library_path='/usr/lib'
 
 """""""""""""""""""""""""""""""""""""
 " Mappings configurationn
