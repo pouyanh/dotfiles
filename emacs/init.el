@@ -65,7 +65,7 @@ There are two things you can do about this warning:
      (deprecated :strike-through "#a9b7c6"))))
  '(package-selected-packages
    (quote
-    (go-impl haskell-mode helm tss tide typescript-mode js2-mode web-mode company-cmake dumb-jump cmake-project cmake-mode clang-format irony-eldoc flycheck-irony company-irony-c-headers company-irony irony go-rename editorconfig company-shell company-c-headers company-erlang company-lua company-php company-go company flycheck cuda-mode go-mode yaml-mode php-mode markdown-mode dockerfile-mode docker-compose-mode golint flymake-go go-eldoc darcula-theme))))
+    (k8s-mode ansible go-impl haskell-mode helm tss tide typescript-mode js2-mode web-mode company-cmake dumb-jump cmake-project cmake-mode clang-format irony-eldoc flycheck-irony company-irony-c-headers company-irony irony go-rename editorconfig company-shell company-c-headers company-erlang company-lua company-php company-go company flycheck cuda-mode go-mode yaml-mode php-mode markdown-mode dockerfile-mode docker-compose-mode golint flymake-go go-eldoc darcula-theme))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -182,3 +182,12 @@ There are two things you can do about this warning:
 (add-to-list 'auto-mode-alist '("\\.tsx?\\'" . typescript-mode))
 
 (add-to-list 'auto-mode-alist '("\\.tsx?\\'" . web-mode))
+
+;; Kubernetes
+
+(defun pouyan-yml-mode ()
+  (k8s-mode))
+
+(add-hook 'yaml-mode-hook
+	  (lambda ()
+	    (k8s-mode)))
