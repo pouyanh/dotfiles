@@ -7,7 +7,11 @@
 *.launch
 .settings/
 *.sublime-workspace
+
+# IDE - emacs
 *~
+\#*\#
+.\#*
 
 # IDE - VSCode
 .vscode/*
