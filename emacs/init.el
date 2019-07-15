@@ -14,6 +14,7 @@ There are two things you can do about this warning:
   (add-to-list 'package-archives (cons "melpa" (concat proto "://melpa.org/packages/")) t)
   ;;(add-to-list 'package-archives (cons "melpa-stable" (concat proto "://stable.melpa.org/packages/")) t)
 
+  ;; Discontinued Marmalade package repo which currently has an expired SSL
   (add-to-list 'package-archives (cons "marmalade" (concat proto "://marmalade-repo.org/packages/")) t)
 
   (when (< emacs-major-version 24)
