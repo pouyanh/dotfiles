@@ -1,12 +1,53 @@
+plugins=()
+
+prehooks() {
+	dir=${1}
+
+	ZSH="/usr/share/oh-my-zsh"
+	plugins+=(command-not-found history-substring-search tmux kubectl npm web-search)
+
+	hooks ${dir} prehook
+}
+
+posthooks() {
+	dir=${1}
+
+	hooks ${dir} posthook
+}
+
+hooks() {
+	dir=${1}
+	hook=${2:-hook}
+
+	for f in ${dir}/*; do
+		source "${f}"
+		if declare -f ${hook} > /dev/null; then
+			${hook}
+			unset -f ${hook}
+		fi
+	done
+}
+
+main() {
+	dirCfg="${1:-${HOME}/.config/zsh}"
+
+	prehooks ${dirCfg}
+
+	source "${ZSH}/oh-my-zsh.sh"
+
+	posthooks ${dirCfg}
+}
+
+main ~/.config/zsh
+
 # Path to your oh-my-zsh configuration.
-ZSH=/usr/share/oh-my-zsh
+#ZSH=/usr/share/oh-my-zsh
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
 #ZSH_THEME="bira"
-ZSH_THEME="blinks"
 
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
@@ -16,7 +57,6 @@ ZSH_THEME="blinks"
 # CASE_SENSITIVE="true"
 
 # Uncomment this to disable bi-weekly auto-update checks
-DISABLE_AUTO_UPDATE="true"
 
 # Uncomment to change how often before auto-updates occur? (in days)
 # export UPDATE_ZSH_DAYS=13
@@ -46,27 +86,16 @@ DISABLE_AUTO_UPDATE="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(gpg-agent ssh-agent command-not-found git git-extras git-prompt golang autojump docker history-substring-search docker-compose tmux kubectl npm web-search)
+#plugins=(gpg-agent ssh-agent command-not-found git git-extras git-prompt golang autojump docker history-substring-search docker-compose tmux kubectl npm web-search)
 
 # zstyle :omz:plugins:ssh-agent lifetime 1h
 
-source $ZSH/oh-my-zsh.sh
-
-# User configuration
-RPROMPT='%{%B%F{cyan}%}[%*]%{%f%k%b%}'
-
-export EDITOR='vim'
-
-alias e="$EDITOR"
-alias se="sudo $EDITOR"
-alias p="proxychains"
-alias sp="sudo proxychains"
 alias whatismyip="curl http://myip.dnsdynamic.org"
 
 function serve() {
 	local port=${1:-80}
 
-	docker run --rm -it --user=`id -u` -p ${port}:80 -v `pwd`:/usr/share/nginx/html nginx:alpine /bin/sh -c "echo 'server { \
+	docker run --rm -it -p ${port}:80 -v `pwd`:/usr/share/nginx/html nginx:alpine /bin/sh -c "echo 'server { \
     listen 80;
     server_name localhost;
     location / {
@@ -93,3 +122,4 @@ export WORKON_HOME=~/.virtualenvs
 source /usr/bin/virtualenvwrapper_lazy.sh
 
 #PYTHONPATH=/usr/lib/python3.8/site-packages/bb
+
