@@ -1,0 +1,3 @@
+prehook() {
+	plugins+=(autojump)
+}
