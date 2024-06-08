@@ -4,7 +4,7 @@ prehooks() {
 	dir=${1}
 
 	ZSH="/usr/share/oh-my-zsh"
-	plugins+=(command-not-found history-substring-search tmux kubectl npm web-search)
+	plugins+=(command-not-found history-substring-search kubectl npm web-search)
 
 	hooks ${dir} prehook
 }
