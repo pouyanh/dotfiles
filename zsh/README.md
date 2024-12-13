@@ -13,5 +13,14 @@ You can link your zsh config file by making a symbolic link to current file
 ln -s ~/path/to/repo/dotfiles/zsh/zshrc ~/.zshrc
 ```
 
+## Use extensions
+Link or copy your desired extensions from ext directory:
+
+```sh
+copy ~/path/to/repo/dotfiles/zsh/ext/00-no-autoupdate.zsh ~/.config/zsh/
+copy ~/path/to/repo/dotfiles/zsh/ext/10-plugin-docker.zsh ~/.config/zsh/
+copy ~/path/to/repo/dotfiles/zsh/ext/10-plugin-git.zsh ~/.config/zsh/
+```
+
 [zsh]: https://www.zsh.org/
 [ohmyzsh]: https://ohmyz.sh/

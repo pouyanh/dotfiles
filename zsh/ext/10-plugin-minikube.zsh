@@ -1,0 +1,3 @@
+prehook() {
+	plugins+=(minikube)
+}
