@@ -94,8 +94,9 @@ alias whatismyip="curl http://myip.dnsdynamic.org"
 
 function serve() {
 	local port=${1:-80}
+  local hostname=${2:-server.local}
 
-	docker run --rm -it -p ${port}:80 -v `pwd`:/usr/share/nginx/html nginx:alpine /bin/sh -c "echo 'server { \
+	docker run --rm -it -e HOSTNAME=${hostname} -p ${port}:80 -v "`pwd`":/usr/share/nginx/html nginx:alpine /bin/sh -c "echo 'server { \
     listen 80;
     server_name localhost;
     location / {
@@ -117,9 +118,6 @@ function serve() {
 # else
 #   export EDITOR='mvim'
 # fi
-
-export WORKON_HOME=~/.virtualenvs
-source /usr/bin/virtualenvwrapper_lazy.sh
 
 #PYTHONPATH=/usr/lib/python3.8/site-packages/bb
 
